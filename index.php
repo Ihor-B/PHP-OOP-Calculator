@@ -34,8 +34,8 @@
             </div>
             <div class="row">
                 <div class="col-12 result">
-                    <p><span class="label">Info:</span><span id="info">&nbsp</span></p>
-                    <p><span class="label">Result:</span><span id="result">&nbsp</span></p>
+                    <p><span class="label">Info:</span><span id="info">&nbsp;</span></p>
+                    <p><span class="label">Result:</span><span id="result">&nbsp;</span></p>
                 </div>
             </div>
         </div>
