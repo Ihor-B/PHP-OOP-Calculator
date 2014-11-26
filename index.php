@@ -13,6 +13,7 @@
     <section id="calculator">
         <div class="container">
             <div class="row">
+            	<h2>Simple Calculator</h2>
                 <div class="col-12">
 					<form id="calc" accept-charset="utf-8">
 						<label class="input_label" for="operator">Operator:</label>
