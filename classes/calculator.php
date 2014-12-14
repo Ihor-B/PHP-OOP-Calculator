@@ -2,122 +2,59 @@
 
 	class Calculator {
 
-		public $a = NULL;
+		public $a = '';
 
-		public $b = NULL;
+		public $b = '';
 
-		public $operator = NULL;
+		public $operator = '';
+		
+		public $result = '';
+		
+		public $error = '';
+		
+		private $pattern = '/^([\+-]?\d+)\s*([\+-\/\*<>&%]{1})\s*([\+-]?\d+)$/';
 
 		public function __construct($data) {
-
-			if (isset($data['a'])) {
-
-				$this->a = $data['a'];
-
-			}
-
-			if (isset($data['b'])) {
-
-				$this->b = $data['b'];
-
-			}
-
-			if (isset($data['operator'])) {
-
-				switch ($data['operator']) {
-				    case 'add':
-				        $this->operator = '+';
-				        break;
-				    case 'subtract':
-				        $this->operator = '-';
-				        break;
-				    case 'multiply':
-				        $this->operator = '*';
-				        break;
-				    case 'divide':
-				        $this->operator = '/';
-				        break;
-				    case 'logicalAnd':
-				        $this->operator = 'AND';
-				        break;
-				    case 'greaterThan':
-				        $this->operator = '>';
-				        break;
+			if (isset($data['exp'])) {
+				if (preg_match($this->pattern, $data['exp'], $matches)) {
+					list(, $this->a, $this->operator, $this->b) = $matches;
+					$this->result = $this->getResult();
+				} else {
+					$this->error = 'operator not supported';
 				}
-
-			}			
-
+			}
 		}
 
 		public function getResult() {
-
-			if ($this->operator == "+") {
-
-				return $this->a + $this->b;
-
+			switch ($this->operator) {
+				case "+" : return $this->a + $this->b;
+				case "-" : return $this->a - $this->b;
+				case "*" : return $this->a * $this->b;
+				case "/" : 
+					if ($this->b * 1 == 0) {
+						$this->error = 'division by zero';
+						return '';
+					} else {
+						return  $this->a / $this->b;
+					}
+				case "<" : return $this->boolToString($this->a < $this->b);
+				case ">" : return $this->boolToString($this->a > $this->b);
+				case "&" : return $this->boolToString($this->a && $this->b);
+				case "%" : return number_format($this->a / $this->b * 100, 2).'%';
 			}
-			
-			if ($this->operator == "-") {
-
-				return $this->a - $this->b;
-
-			}
-
-			if ($this->operator == "*") {
-
-				return $this->a * $this->b;
-
-			}
-
-			if ($this->operator == "/") {
-
-				return $this->a / $this->b;
-
-			}
-
-			if ($this->operator == "AND") {
-
-				if ($this->a && $this->b) {
-
-					return "True";
-
-				} else {
-
-					return "False";
-
-				}
-
-			}
-
-			if ($this->operator == ">") {
-
-				if ($this->a > $this->b) {
-
-					return "True";
-
-				} else {
-
-					return "False";
-
-				}
-
-			}
-
+		}
+		
+		private function boolToString($bool) {
+			return ($bool) ? 'True' : 'False';
 		}
 
 		public function encodeJSON() {
-
-			$jsonoutput = array('a' => $this->a, 'b' => $this->b, 'operator' => $this->operator, 'result' => $this->getResult());
-
+			$jsonoutput = array('a' => $this->a, 'b' => $this->b, 'operator' => $this->operator, 'result' => $this->result, 'error' => $this->error);
 			return json_encode($jsonoutput);
-
 		}
-
 	}
-
 
 	$calculator = new Calculator($_GET);
 
 	echo $calculator->encodeJSON();
-
 ?>

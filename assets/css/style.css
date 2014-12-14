@@ -68,7 +68,7 @@
 		}		
 
 		#calculator button{
-			margin: 20px 0 0 200px;
+			/*margin: 20px 0 0 200px;*/
 			padding: 5px 8px;			
 			width: 100px;
 			cursor: pointer;
