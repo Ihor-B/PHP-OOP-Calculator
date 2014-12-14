@@ -13,9 +13,10 @@
     <section id="calculator">
         <div class="container">
             <div class="row">
-            	<h2>Simple Calculator</h2>
+            	<h2>Simple Calculator v0.5</h2>
                 <div class="col-12">
 					<form id="calc" accept-charset="utf-8">
+					<!--
 						<label class="input_label" for="operator">Operator:</label>
 						<select name="operator" id="operator">
 							<option value="add">Add</option>
@@ -29,6 +30,8 @@
 						<input type="text" name="a" id="left_operand" required><br>
 						<label class="input_label" for="right_operand">Right-hand Operand:</label>
 						<input type="text" name="b" id="right_operand" required><br>
+						-->
+						<input type="text" name="exp" id="expression" required>
 						<button id="calculate" type="submit">Calculate</button>
 					</form>                    
                </div>
